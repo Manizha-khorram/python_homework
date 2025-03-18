@@ -39,16 +39,16 @@ print(CalcFunc(2,0, '/'))
 def data_type_conversion(value, type):
 
    match type:
-        case 'str':
+        case "str":
             return str(value) 
-        case 'int':
+        case "int":
             return int(value)
-        case 'float':
+        case "float":
             return float(value) if isinstance(value , int) else f"You can't convert {value} into a {type}"
         case _:
             raise ValueError(f"Unsupported type: {type}")
 
-print (data_type_conversion('hello', 'float'))
+print (data_type_conversion("hello", "float"))
 
 
 #Task5
@@ -78,3 +78,49 @@ def grade(*args):
 
 
 print(grade(85, 90, 78)) 
+
+#Task6
+
+def repeat(string, count):
+      
+    result = ""
+    for n in range(count):
+       result += string
+    return result
+
+print(repeat('hello',2))
+
+#Task7
+def student_scores(mode, **kwargs):
+
+    if not kwargs: 
+            return "No scores provided."
+    
+    if mode == "best":
+        max_score = -1 
+        best_student = None
+        for student, score in kwargs.items():
+            if score > max_score:
+                max_score = score
+                best_student = student
+        return best_student
+
+    elif mode == "mean":
+        return sum(kwargs.values()) / len(kwargs)
+
+
+print(student_scores("mean", Marry=90, Ahmad=40, Harry=80))
+
+#Task8
+
+def titleize(text):
+    little_words = {"a", "on", "an", "the", "of", "and", "is", "in"}
+    words = text.lower().split()
+
+    for i, word in enumerate(words):
+        if i == 0 or i == len(words) - 1 or word not in little_words:
+            words[i] = word.capitalize()
+    return " ".join(words)
+
+print(titleize("Code the dream is the best."))
+        
