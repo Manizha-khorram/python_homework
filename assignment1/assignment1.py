@@ -1,54 +1,65 @@
 #Task1
-def HelloFunc():
+def hello():
     return('Hello!')
 
-print(HelloFunc())
+print(hello())
 
 #Task2
-def GreetFun(name):
-    return('Hello'+" "+ name +'!')
+def greet(name):
+    return('Hello,'+" "+ name +'!')
 
-print(GreetFun('Manizha'))
+print(greet('Manizha'))
 
 #Task3
 
-def CalcFunc(a , b, opration = None):
-   
-   if isinstance(a, str) or isinstance(b, str):
-        return "Cannot perform operations on strings"
-   
-   match opration:
-       case None:
-          return a*b 
-       case "+":
-          return a+b
-       case "-":
-          return a-b
-       case "/":
-          return a/b if b != 0 else "Cannot divide by zero"
-       case "%":
-          return a%b if b != 0 else "Cannot divide by zero"
-       case "//":
-          return a // b
-       case "**":
-          return a**b
-        
-print(CalcFunc(2,0, '/'))
+def calc(a, b, operation="multiply"):
+    try:
+        match operation:
+            case "add":
+                return a + b
+            case "subtract":
+                return a - b
+            case "multiply":
+                return a * b
+            case "divide":
+                if b == 0:
+                    raise ZeroDivisionError
+                return a / b
+            case "modulo":
+                if b == 0:
+                    raise ZeroDivisionError
+                return a % b
+            case "int_divide":
+                if b == 0:
+                    raise ZeroDivisionError
+                return a // b
+            case "power":
+                return a ** b
+            case _:
+                return "Invalid operation"
+    except ZeroDivisionError:
+        return "You can't divide by 0!"
+    except TypeError:
+        return "You can't multiply those values!"
+      
+print(calc(2,2, 'devide'))
 
 #Task4
 def data_type_conversion(value, type):
+    try:
+        match type:
+            case "str":
+                return str(value) 
+            case "int":
+                return int(value)
+            case "float":
+                return float(value)
+            case _:
+                raise ValueError(f"Unsupported type: {type}")
+    except (ValueError, TypeError):
+        return f"You can't convert {value} into a {type}."
 
-   match type:
-        case "str":
-            return str(value) 
-        case "int":
-            return int(value)
-        case "float":
-            return float(value) if isinstance(value , int) else f"You can't convert {value} into a {type}"
-        case _:
-            raise ValueError(f"Unsupported type: {type}")
-
-print (data_type_conversion("hello", "float"))
+print (data_type_conversion(3.4, "int"))
 
 
 #Task5
@@ -123,4 +134,51 @@ def titleize(text):
     return " ".join(words)
 
 print(titleize("Code the dream is the best."))
+
+#Task9
+
+def hangman(secret, guess):
+    correct_guess = ""
+    secret = secret.lower()
+    guess= guess.lower()
+    for letter in secret:
+            if letter in guess:
+                correct_guess += letter
+
+            else :
+                correct_guess +="_"
+            
+    return correct_guess    
+
+print(hangman("Life is short!", "labscdefor"))
+
+
+#Task10
+def pig_latin(string):
+    vowels = "aeiou"
+    
+    words = string.split()  
+    modified_words = [] 
+    
+    for word in words:
+        if word[0].lower() in vowels:
+            modified_words.append(word + 'ay')
         
+        else:
+            vowel_pos = len(word) 
+            for i in range(len(word)):
+                if i > 0 and word[i-1].lower() == 'q' and word[i].lower() == 'u':
+                    continue
+                    
+                if word[i].lower() in vowels:
+                    vowel_pos = i
+                    break
+            
+        
+            modified_words.append(word[vowel_pos:] + word[:vowel_pos] + "ay")
+    
+    return " ".join(modified_words)
+
+print(pig_latin('apple is sweet so I ate it so quickly'))       
+
+
